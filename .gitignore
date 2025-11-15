@@ -1,0 +1,33 @@
+# Python cache & compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual Environment
+.venv/
+
+# Build artifacts
+build/
+*.zip
+*.egg-info/
+
+# LocalStack
+.localstack/
+localstack_data/
+
+# Test & Coverage artifacts
+.pytest_cache/
+.coverage
+htmlcov/
+*.xml
+
+# IDE & OS specific
+.vscode/
+.idea/
+.DS_Store
+*.swp
+*.swo
+
+# Local output files
+output.json

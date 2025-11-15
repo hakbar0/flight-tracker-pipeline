@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "flight-tracker-pipeline"
+version = "0.1.0"
+description = "A serverless pipeline to track flights and load them into OpenSearch."
+requires-python = ">=3.11"
+
+# Note: The main [project.dependencies] section is empty
+# because runtime dependencies are managed by each
+# lambda in its own requirements.txt file.
+
+[project.optional-dependencies]
+# --- Dev Dependencies ---
+# Install with: pip install -e ".[dev]"
+dev = [
+    "pytest",
+    "pytest-cov",
+    "ruff",
+    "black",
+    "requests",
+    "opensearch-py" 
+]
+
+# --- AWS Tools (for Makefile) ---
+# Install with: pip install -e ".[aws]"
+aws = [
+    "awscli",
+    "localstack"
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+select = ["E", "F", "W", "I"]
+
+[tool.black]
+line-length = 88
+target-version = ["py310"]
