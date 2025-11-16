@@ -1,0 +1,30 @@
+{
+  "Comment": "Flight Tracker Pipeline",
+  "StartAt": "fetch_flight_list",
+  "States": {
+    "fetch_flight_list": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:eu-west-2:000000000000:function:fetch_flight_list",
+      "ResultPath": "$.flight_list",
+      "Next": "process_flights"
+    },
+    "process_flights": {
+      "Type": "Map",
+      "ItemsPath": "$.flight_list",
+      "ResultPath": "$.processed_flights",
+      "Iterator": {
+        "StartAt": "process_single_flight",
+        "States": {
+          "process_single_flight": {
+            "Type": "Task",
+            "Resource": "arn:aws:lambda:eu-west-2:000000000000:function:process_single_flight",
+            "InputPath": "$",
+            "ResultPath": "$.processed",
+            "End": true
+          }
+        }
+      },
+      "End": true
+    }
+  }
+}

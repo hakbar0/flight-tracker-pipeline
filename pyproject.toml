@@ -19,9 +19,7 @@ dev = [
     "pytest",
     "pytest-cov",
     "ruff",
-    "black",
-    "requests",
-    "opensearch-py" 
+    "black"
 ]
 
 # --- AWS Tools (for Makefile) ---

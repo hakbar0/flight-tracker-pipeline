@@ -1,0 +1,13 @@
+{
+  "icao24": "a8b72b",
+  "callsign": "SWR100  ",
+  "origin_country": "Switzerland",
+  "longitude": 8.5393,
+  "latitude": 47.4583,
+  "baro_altitude_m": 1234.5,
+  "on_ground": false,
+  "velocity_mps": 100.2,
+  "true_track_deg": 45.1,
+  "vertical_rate_mps": 0,
+  "geo_altitude_m": 1300
+}

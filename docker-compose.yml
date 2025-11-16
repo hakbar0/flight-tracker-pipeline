@@ -5,7 +5,7 @@ services:
     ports:
       - "127.0.0.1:4566:4566"
     environment:
-      - SERVICES=s3,lambda
+      - SERVICES=s3,lambda,stepfunctions
       - DEBUG=1
     volumes:
       - "localstack_data:/var/lib/localstack"

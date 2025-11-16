@@ -6,6 +6,7 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 API_URL = "https://opensky-network.org/api/states/all"
+MAX_FLIGHTS_TO_PROCESS = 50
 
 def handler(event: dict, context: object) -> list:
     logger.info("Fetching live flight data from OpenSky Network...")
@@ -19,7 +20,12 @@ def handler(event: dict, context: object) -> list:
 
         if data.get("states"):
             for flight_state in data["states"]:
+                if len(flight_list) >= MAX_FLIGHTS_TO_PROCESS:
+                    logger.info(f"Reached limit of {MAX_FLIGHTS_TO_PROCESS} flights. Stopping.")
+                    break
+                
                 flight_list.append({
+                    "icao24": str(flight_state[0]).strip() if flight_state[0] else None,
                     "callsign": str(flight_state[1]).strip() if flight_state[1] else None,
                     "origin_country": str(flight_state[2]) if flight_state[2] else None,
                     "longitude": float(flight_state[5]) if flight_state[5] else None,
