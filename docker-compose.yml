@@ -1,0 +1,54 @@
+services:
+  localstack:
+    image: localstack/localstack:latest
+    container_name: localstack-main
+    ports:
+      - "127.0.0.1:4566:4566"
+    environment:
+      - SERVICES=s3,lambda
+      - DEBUG=1
+    volumes:
+      - "localstack_data:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - flight-tracker-net
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:9.2.1
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=true
+      - ELASTIC_PASSWORD=changeme
+      - http.cors.enabled=true
+      - http.cors.allow-origin="*"
+      - http.cors.allow-credentials=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "127.0.0.1:9200:9200"
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    networks:
+      - flight-tracker-net
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:9.2.1
+    container_name: kibana
+    ports:
+      - "127.0.0.1:5601:5601"
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - ELASTICSEARCH_USERNAME=kibana_system
+      - ELASTICSEARCH_PASSWORD=changeme
+    networks:
+      - flight-tracker-net
+    depends_on:
+      - elasticsearch
+
+networks:
+  flight-tracker-net:
+    driver: bridge
+
+volumes:
+  localstack_data:
+  elasticsearch-data:
